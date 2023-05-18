@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Form Validation Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1> Bootstrap 3 form validation with field attached alert message</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">  
+      <form action="" method="post" onsubmit="return on_form_sbmt()">
+        <div class="form-group">
+            <label for="id_name">Name</label>
+            <input id="id_name" class="form-control" type="text" placeholder="Name" onblur="validate_name();">
+        </div>
+        <div class="form-group">
+            <label for="id_email">Email</label>
+            <input id="id_email" class="form-control" type="text" placeholder="Email" onblur="validate_email();">
+        </div>
+        <div class="form-group">
+            <label for="id_phone_no">Phone No</label>
+            <input id="id_phone_no" class="form-control" type="text" placeholder="Phone No" onblur="validate_phone();">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-default" type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+function on_form_sbmt() {
+    var name = $('#id_name').val();
+    var email = $('#id_email').val();
+    var phone_no = $('#id_phone_no').val();
+
+    var message_init = '<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-triangle-top"></span><a href="#" class="close" data-dismiss="alert">×</a>';
+    var message_ends = '</div>';
+
+    if (name.length < 2 || !/^[A-Za-z\s]+$/.test(name)) { 
+        var message = message_init + 'Name length must be greater than 2 characters' + message_ends;
+        $('#id_name').focus();
+        if($('input#id_name + div.alert.alert-danger').length == 0) {
+          $('#id_name').after(message);
+        }
+        return false;
+    }else{
+        $('input#id_name + div.alert.alert-danger').remove();
+    }
+
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) { 
+        var message = message_init + 'Please enter an email with proper formet' + message_ends;
+        $('#id_email').focus();
+        if($('input#id_email + div.alert.alert-danger').length == 0) {
+          $('#id_email').after(message);
+        }
+        return false;
+    }else{
+      $('input#id_email + div.alert.alert-danger').remove();
+    }
+
+    if (!/^\+?([0]{1})\)?([0-9]{9,10})$/.test(phone_no) && !/^\+?([91]{2})\)?([0-9]{9,10})$/.test(phone_no) ) { 
+        var message = message_init + 'Please fill your proper phno with +91 Or 0' + message_ends;
+        $('#id_phone_no').focus();
+        if($('input#id_phone_no + div.alert.alert-danger').length == 0) {
+          $('#id_phone_no').after(message);
+        }
+        return false;
+    }else{
+        $('input#id_phone_no + div.alert.alert-danger').remove();
+    }
+
+    return true;
+}
+
+function validate_name(){
+  var name = $('#id_name').val();
+  if (name.length < 2 || !/^[A-Za-z\s]+$/.test(name)) { 
+    var message = '<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-triangle-top"></span><a href="#" class="close" data-dismiss="alert">×</a>Name lenth must be greter then 2 and only character</div>';
+    $('#id_name').focus();
+    if($('input#id_name + div.alert.alert-danger').length == 0) {
+      $('#id_name').after(message);
+    }
+  }else{
+      $('input#id_name + div.alert.alert-danger').remove();
+  }
+}
+
+function validate_email(){
+  var email = $('#id_email').val();
+  if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) { 
+    var message = '<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-triangle-top"></span><a href="#" class="close" data-dismiss="alert">×</a>Please enter an email with proper formet</div>';
+      $('#id_email').focus();
+      if($('input#id_email + div.alert.alert-danger').length == 0) {
+        $('#id_email').after(message);
+      }
+    }else{
+      $('input#id_email + div.alert.alert-danger').remove();
+    }
+}
+
+function validate_phone(){
+  var phone_no = $('#id_phone_no').val();
+  if (!/^\+?([0]{1})\)?([0-9]{9,10})$/.test(phone_no) && !/^\+?([91]{2})\)?([0-9]{9,10})$/.test(phone_no) ) {
+    var message = '<div class="alert alert-danger fade in"><span class="glyphicon glyphicon-triangle-top"></span><a href="#" class="close" data-dismiss="alert">×</a>Please fill your proper phno with +91 Or 0</div>';
+      $('#id_phone_no').focus();
+      if($('input#id_phone_no + div.alert.alert-danger').length == 0) {
+        $('#id_phone_no').after(message);
+      }
+    }else{
+      $('input#id_phone_no + div.alert.alert-danger').remove();
+    }
+}
+</script>
+
+
+</body>
+
+</html>

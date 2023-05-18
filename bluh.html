@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<head>
+
+<title>My Form</title>
+
+</head>
+
+<body>
+
+<script> 
+
+
+function validateForm(){
+  var username = document.myform.Username.value;
+  var password = document.myform.Password.value;
+  var password2 = document.myform.Password2.value;
+  var phone = document.myform.Phone.value;
+  var email = document.myform.Email.value;
+
+  if(username ==""){
+    alert("Please fill the username field"); 
+    return false;
+  }
+
+  if(username.length <= 2 || username.length > 20){
+    alert("Username length must be between 2 to 20");
+    return false;
+  }
+ 
+  if(!isNaN(username)){
+    alert("Only characters are allowed");
+    return false;
+  }
+
+  
+  if(password ==""){
+    alert("Please fill the password field"); 
+    return false;
+  }
+
+  if(password.length <= 4 || password.length > 20){
+    alert("Password length must be between 5 to 20");
+    return false;
+  }
+
+ 
+  
+  if(password2 ==""){
+    alert("Please re-enter the password"); 
+    return false;
+  }
+
+  if(password!==password2){
+    alert("Passwords do not match");
+    return false;
+  }
+
+
+  if(phone ==""){
+    alert("Please enter a phone number");
+    return false;
+  }
+
+  if(isNaN(phone)){
+    alert("Only digits are allowed");
+    return false;
+  }
+
+  if(phone.length!=11){
+    alert("Phone number must be 11 digits only");
+    return false;
+  }
+
+
+  if(email ==""){
+    alert("Please fill the email field");
+    return false;
+  }
+}
+ function emailValidation()
+{
+  value = document.getElementById('Email').value;
+  apos=value.indexOf("@"); 
+  dotpos=value.lastIndexOf(".");
+  lastpos=value.length-1;
+  if (apos < 1 || dotpos-apos < 2 || lastpos-dotpos > 3 || lastpos-dotpos < 2){
+      alert("Invalid Email Address");
+      return false;
+    } else {
+      return true;
+  }
+}
+
+
+      
+</script>  
+
+<form name="myform" action="/action_page.php" target="_blank" method="post" onsubmit="return validateForm();">
+  <fieldset>
+  <legend><h1>SIGN UP</h1></legend>
+    
+    <label for="Username">Username:</label>
+    <input type="text" id="Username" name="Username"><br><br>
+
+    <label for="Password">Password:</label>
+    <input type="password" id="Password" name="Password"><br><br>
+
+    <label for="Password2">Re-Enter Password:</label>
+    <input type="password" id="Password2" name="Password2"><br><br>
+
+    <label for="Birthday">Enter your birthday</label>
+    <input type="date" id="Birthday" name="Birthday"><br><br>
+
+    <label for="Phone">Enter your Phone number</label>
+    <input type="text" id="Phone" name="Phone" placeholder="01234567891"><br><br>
+ 
+    <label for="Email">Enter your email:</label>
+    <input type="text" id="Email" name="Email" placeholder="abc@gmail.com" onchange="return emailValidation();"><br><br>
+    
+    <input type="submit" value="Register" id="register">
+
+  </fieldset>
+</form>
+</body>
+</html>

@@ -1,0 +1,331 @@
+!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://www.cssscript.com/demo/sticky.css" rel="stylesheet" type="text/css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+ 
+    <!-- Title -->
+    <title>Bootstrap 5 Regex Form Validation Example</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+
+<style>
+
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+:root {
+    --clr-bg: #181f4b;
+    --clr-primary: #0f1336;
+    --clr-secondary: #f53075;
+    --clr-inputs: #262e5f;
+    --text-clr-pr: #ececec;
+    --text-clr-sec: #a8a8a8;
+    --clr-blue: #1da1f2;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.address::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    background-color: var(--clr-bg);
+    font-family: "Lato", sans-serif;
+}
+
+label {
+    color: var(--text-clr-pr);
+}
+
+#emailHelp {
+    color: var(--text-clr-sec);
+}
+
+.container h1 {
+    color: var(--text-clr-pr);
+    border-color: var(--clr-secondary) !important;
+    letter-spacing: 2px;
+    font-weight: 400;
+}
+
+form {
+    padding: 50px;
+    border-radius: 20px;
+    background-color: var(--clr-primary);
+}
+
+.container h1 span {
+    color: var(--clr-secondary);
+}
+
+label {
+    font-weight: 400;
+    color: var(--text-clr-pr);
+    font-size: 18px;
+}
+
+input {
+    background-color: var(--clr-inputs) !important;
+    color: var(--text-clr-pr) !important;
+    outline: var(--clr-secondary) !important;
+    font-weight: 400;
+}
+
+textarea {
+    background-color: var(--clr-inputs) !important;
+    color: var(--text-clr-pr) !important;
+}
+
+select {
+    background-color: var(--clr-inputs) !important;
+    color: var(--text-clr-pr) !important;
+}
+
+#emailHelp {
+    color: var(--text-clr-sec);
+}
+
+#emailHelp span {
+    color: var(--clr-secondary);
+}
+
+::placeholder {
+    color: var(--text-clr-sec);
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.myBtn {
+    background-color: var(--clr-secondary);
+    border-radius: 10px;
+    border-color: var(--clr-secondary);
+    color: var(--text-clr-pr);
+    font-size: 17px;
+    font-weight: 400;
+    box-shadow: none !important;
+}
+
+.myBtn:hover {
+    background: none;
+    border-color: var(--clr-secondary);
+    color: var(--clr-secondary);
+}
+
+.form-control {
+    border-color: var(--clr-inputs);
+    border-radius: 6px;
+}
+
+.form-control:focus {
+    border-color: var(--clr-blue);
+    box-shadow: 0 0 0 0.2rem rgb(29, 161, 242, 0.2);
+}
+
+.form-check-input {
+    background-color: var(--clr-inputs);
+    border-color: var(--clr-inputs) !important;
+    box-shadow: none !important;
+}
+
+.form-check-input:checked {
+    background-color: var(--clr-secondary) !important;
+    border-color: var(--clr-secondary) !important;
+}
+
+.credit a {
+    color: var(--clr-blue);
+}
+
+
+</style>
+</head>
+
+<body>
+
+<script>
+
+const username = document.getElementById("username");
+const email = document.getElementById("email");
+const phone = document.getElementById("phone");
+let validUsername = false;
+let validEmail = false;
+let validPhone = false;
+const successAlert = document.getElementById("successAlert");
+const failAlert = document.getElementById("failAlert");
+
+successAlert.style.display = "none";
+failAlert.style.display = "none";
+
+username.addEventListener("blur", () => {
+    let regex = /^[a-zA-Z]([0-9a-zA-Z]){1,10}$/;
+    let str = username.value;
+    if (regex.test(str)) {
+        username.classList.remove("is-invalid");
+        validUsername = true;
+    } else {
+        username.classList.add("is-invalid");
+        validUsername = false;
+    }
+});
+
+email.addEventListener("blur", () => {
+    let emailHelp = document.getElementById("emailHelp");
+    let regex = /^([_\-\.a-zA-Z0-9]+)@([_\-\.a-zA-Z0-9]+)\.([a-zA-Z]){2,7}$/;
+    let str = email.value;
+    if (regex.test(str)) {
+        emailHelp.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" id="lockSvg" fill="currentColor" class="bi bi-lock-fill me-1 mb-1" viewBox="0 0 16 16">
+        <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+      </svg>We'll <span>never</span> share your email with anyone else.</div>`;
+        email.classList.remove("is-invalid");
+        validEmail = true;
+    } else {
+        emailHelp.innerHTML = ``;
+        email.classList.add("is-invalid");
+        validEmail = false;
+    }
+});
+
+phone.addEventListener("blur", () => {
+    let regex = /^([0-9]){10}$/;
+    let str = phone.value;
+    if (regex.test(str)) {
+        phone.classList.remove("is-invalid");
+        validPhone = true;
+    } else {
+        phone.classList.add("is-invalid");
+        validPhone = false;
+    }
+});
+
+let submit = document.getElementById("submit");
+submit.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    if (validEmail && validUsername && validPhone) {
+        successAlert.style.display = "block";
+    } else {
+        failAlert.style.display = "block";
+    }
+});
+
+
+</script>
+
+    <!-- Alerts -->
+    <div id="successAlert" class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        <strong>Congrats!</strong> Your request has been successfully submitted ;)
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div id="failAlert" class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+        <strong>Whoops!</strong> Something is wrong :/
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <!-- Form -->
+    <div class="container my-4">
+        <form autocomplete="off">
+            <h1 class="mb-4 border-bottom border-4 rounded-bottom pb-1">Bootstrap 5 Regex Form Validation Example</h1>
+            <p class="lead text-white">Validate form fields in your Bootstrap 5 project by using custom Regex.</p>
+            <div class="my-3"><div id="carbon-block"></div>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- CSSScript Demo Page -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-2783044520727903"
+     data-ad-slot="3025259193"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+
+            <div class="mb-4">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" placeholder="Enter your username...">
+                <small id="usernamevalid" class="form-text text-danger invalid-feedback">Username must be 2-10 characters long, and must start with a letter.</small>
+            </div>
+
+            <div class="mb-4">
+                <label for="email" class="form-label">Email address</label>
+                <input type="text" class="form-control" id="email" aria-describedby="emailHelp" autocomplete="off" placeholder="name@domain.com">
+                <div id="emailHelp" class="form-text"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" id="lockSvg" fill="currentColor" class="bi bi-lock-fill me-1 mb-1" viewBox="0 0 16 16">
+                    <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                  </svg>We'll <span>never</span> share your email with anyone else.</div>
+                <small id="emailvalid" class="form-text text-danger invalid-feedback">Email must be valid!</small>
+            </div>
+
+            <div class="mb-4 phone">
+                <label for="phone" class="form-label">Phone</label>
+                <input type="text" class="form-control" id="phone" autocomplete="off" placeholder="+91">
+                <small id="phonevalid" class="form-text text-danger invalid-feedback">Phone must be 10 digits long.</small>
+            </div>
+
+            <div class="mb-4">
+                <label for="address" class="form-label">Address</label>
+                <textarea name="address" id="address" class="form-control" autocomplete="off" placeholder="Enter your address..."></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label for="people" class="form-label">Number of people</label>
+                <select class="form-control form-select-sm" id="people">
+                    <option>Select number of people</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                    <option value="4">Four</option>
+                    <option value="5">Five</option>
+                  </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password">
+            </div>
+
+            <div class="mb-4 form-check">
+                <input type="checkbox" class="form-check-input" id="checkbox">
+                <label class="form-check-label" for="checkbox">Keep me logged in</label>
+            </div>
+            <button id="submit" type="submit" class="myBtn btn">Submit</button>
+        </form>
+    </div>
+
+  
+    <!-- Bootstrap Js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+try {
+  fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' })).then(function(response) {
+    return true;
+  }).catch(function(e) {
+    var carbonScript = document.createElement("script");
+    carbonScript.src = "//cdn.carbonads.com/carbon.js?serve=CE7DC2JW&placement=wwwcssscriptcom";
+    carbonScript.id = "_carbonads_js";
+    document.getElementById("carbon-block").appendChild(carbonScript);
+  });
+} catch (error) {
+  console.log(error);
+}
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46156385-1', 'cssscript.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+</body>
+
+</html>

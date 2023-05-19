@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+/* Style inputs, select elements and textareas */
+input[type=text], select{
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+/* Style the label to display next to the inputs */
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+/* Style the submit button */
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+/* Style the container */
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+/* Floating column for labels: 25% width */
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+/* Floating column for inputs: 75% width */
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+
+  }
+}
+
+
+
+
+</style>
+
+</head>
+
+<body>
+
+<script> 
+
+
+function validateForm(){
+  var username = document.myform.Username.value;
+  var password = document.myform.Password.value;
+  var password2 = document.myform.Password2.value;
+  var phone = document.myform.Phone.value;
+  var email = document.myform.Email.value;
+  var date = document.myform.date.value;
+
+  if(username ==""){
+    document.getElementById("1").innerHTML="Please fill the username field"; 
+    return false;
+  }
+  else{
+    document.getElementById("1").innerHTML="";
+  }
+
+  if(username.length <= 2 || username.length > 20){
+    document.getElementById("1").innerHTML="Username length must be between 2 to 20";
+    return false;
+  }
+  else{
+    document.getElementById("1").innerHTML="";
+  }
+
+var iChars = "!@#$%^&*()+=-[]\\\';,./{}|\":<>?";
+
+for (var i = 0; i < document.myform.Username.value.length; i++) {
+  if (iChars.indexOf(document.myform.Username.value.charAt(i)) != -1) {
+      document.getElementById("1").innerHTML="Your username has special characters. \nThese are not allowed.\n Please remove them and try again.";
+      return false;
+   }
+  else{
+    document.getElementById("1").innerHTML="";
+  }    
+}
+
+  
+  if(password ==""){
+    document.getElementById("2").innerHTML="Please fill the password field"; 
+    return false;
+  }
+  else{
+    document.getElementById("2").innerHTML="";
+  }
+
+  var passwordformat = /^(?=(.*[a-z]){3,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{6,}$/;
+  if(!(passwordformat.test(password))){
+    document.getElementById("2").innerHTML="Incorrect password format. \nPassword must contain 3 lowercase letters, 1 uppercase letter, 1 digit and 1 special case character.";
+    return false;
+  }
+  else{
+   document.getElementById("2").innerHTML="";
+  }
+
+ 
+  
+  if(password2 ==""){
+    document.getElementById("3").innerHTML="Please re-enter the password"; 
+    return false;
+  }
+  else{
+    document.getElementById("3").innerHTML="";
+  }
+
+  if(password!==password2){
+    document.getElementById("3").innerHTML="Passwords do not match";
+    return false;
+  }
+  else{
+    document.getElementById("3").innerHTML="";
+  }
+
+
+function ageValidation() {
+ 
+    var lre = /^\s*/;
+    var datemsg = "";
+    
+    var inputDate = document.myform.date.value;
+    inputDate = inputDate.replace(lre, "");
+    document.myform.date.value = inputDate;
+    datemsg = isValidDate(inputDate);
+        if (datemsg != "") {
+            alert(datemsg);
+            return;
+        }
+        else {
+            //Now find the Age based on the Birth Date
+            getAge(new Date(inputDate));
+        }
+ 
+}
+ 
+function getAge(birth) {
+ 
+    var today = new Date();
+    var nowyear = today.getFullYear();
+    var nowmonth = today.getMonth();
+    var nowday = today.getDate();
+ 
+    var birthyear = birth.getFullYear();
+    var birthmonth = birth.getMonth();
+    var birthday = birth.getDate();
+ 
+    var age = nowyear - birthyear;
+    var age_month = nowmonth - birthmonth;
+    var age_day = nowday - birthday;
+    
+    if(age_month < 0 || (age_month == 0 && age_day <0)) {
+            age = parseInt(age) -1;
+        }
+    alert(age);
+    
+    if ((age == 18 && age_month <= 0 && age_day <=0) || age < 18) {
+    }
+    else {
+        alert("You have crossed your 18th birthday !");
+    }
+ 
+}
+ 
+function isValidDate(dateStr) {
+ 
+    
+    var msg = "";
+    // Checks for the following valid date formats:
+    // MM/DD/YY   MM/DD/YYYY   MM-DD-YY   MM-DD-YYYY
+    // Also separates date into month, day, and year variables
+ 
+    // To require a 2 & 4 digit year entry, use this line instead:
+    //var datePat = /^(\d{1,2})(\/|-)(\d{1,2})\2(\d{2}|\d{4})$/;
+    // To require a 4 digit year entry, use this line instead:
+    var datePat = /^(\d{1,2})(\/|-)(\d{1,2})\2(\d{4})$/;
+ 
+    var matchArray = dateStr.match(datePat); // is the format ok?
+    if (matchArray == null) {
+        msg = "Date is not in a valid format.";
+        return msg;
+    }
+ 
+    month = matchArray[1]; // parse date into variables
+    day = matchArray[3];
+    year = matchArray[4];
+ 
+    
+    if (month < 1 || month > 12) { // check month range
+        msg = "Month must be between 1 and 12.";
+        return msg;
+    }
+ 
+    if (day < 1 || day > 31) {
+        msg = "Day must be between 1 and 31.";
+        return msg;
+    }
+ 
+    if ((month==4 || month==6 || month==9 || month==11) && day==31) {
+        msg = "Month "+month+" doesn't have 31 days!";
+        return msg;
+    }
+ 
+    if (month == 2) { // check for february 29th
+    var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
+    if (day>29 || (day==29 && !isleap)) {
+        msg = "February " + year + " doesn't have " + day + " days!";
+        return msg;
+    }
+    }
+ 
+    if (day.charAt(0) == '0') day= day.charAt(1);
+    
+    //Incase you need the value in CCYYMMDD format in your server program
+    //msg = (parseInt(year,10) * 10000) + (parseInt(month,10) * 100) + parseInt(day,10);
+    
+    return msg;  // date is valid
+}
+
+
+
+  
+  if(phone ==""){
+    document.getElementById("5").innerHTML="Please enter a phone number";
+    return false;
+  }
+  else{
+    document.getElementById("5").innerHTML="";
+  }
+
+  if(isNaN(phone)){
+    document.getElementById("5").innerHTML="Only digits are allowed";
+    return false;
+  }
+  else{
+    document.getElementById("5").innerHTML="";
+  }
+
+  var phoneformat = /^(?:(([+]|00)92)|0)((3[0-6][0-9]))(\d{7})$/;
+  if(!(phoneformat.test(phone))){
+    document.getElementById("5").innerHTML="Please enter valid phone format";
+    return false;
+  }
+  else{
+    document.getElementById("5").innerHTML="";
+  }
+
+
+  if(email ==""){
+    document.getElementById("6").innerHTML="Please fill the email field";
+    return false;
+  }
+  else{
+    document.getElementById("6").innerHTML="";
+  }
+	
+  var emailpattern=/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if(!(emailpattern.test(email))){
+    document.getElementById("6").innerHTML="Please enter a valid email";
+    return false;
+  }
+  else{
+   document.getElementById("6").innerHTML="";
+  }
+
+}
+
+</script>  
+
+
+<div class="container">
+  <form name="myform" id="myform" class="myform" action="/action_page.php" target="_blank" method="post" onsubmit="return validateForm();">
+  <h1>SIGN UP</h1>
+  <div class="row">
+    <div class="col-25">
+    <label for="Username">Username:</label>
+    </div>
+    <div class="col-75">
+    <input type="text" id="Username" name="Username"><br>
+    <small id="1"></small>
+    </div>
+  </div>
+  <br><br>
+
+  <div class="row">
+    <div class="col-25">
+    <label for="Password">Password:</label>
+    </div>
+    <div class="col-75">
+    <input type="password" id="Password" name="Password"><br>
+    <small id="2"></small>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="col-25"> 
+    <label for="Password2">Re-Enter Password:</label>
+    </div>
+    <div class="col-75">
+    <input type="password" id="Password2" name="Password2">
+    <small id="3"></small>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="col-25">
+    <label for="Birthday">Enter your birthday</label>
+    </div>
+    <div class="col-75">
+    <input type="text" id="date" name="Birthday" placeholder="mm/dd/yyyy" onchange="ageValidation()"><br>
+    <small id="4"></small>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="col-25">
+    <label for="Phone">Enter your Phone number</label>
+    </div>
+    <div class="col-75">
+    <input type="text" id="Phone" name="Phone">
+    <small id="5"></small>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="col-25"> 
+    <label for="Email">Enter your email:</label>
+    </div>
+    <div class="col-75">
+    <input type="text" id="Email" name="Email" placeholder="abc@gmail.com"><br>
+    <small id="6"></small>
+    </div>
+  </div>
+  <br>
+
+    <input type="submit" value="Register" id="register"><br>
+    <input type="reset" value="Reset" id="reset">
+
+  </form>
+</div>
+</body>
+</html>

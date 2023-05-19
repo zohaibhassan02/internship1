@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<head>
+
+<title>My Form</title>
+
+</head>
+
+<body>
+
+<script> 
+ 
+function validateForm(){
+  var username = document.myform.username.value;
+  var password = document.myform.password.value;
+  var password2 = document.myform.password2.value;
+  var phone = document.myform.phone.value;
+  var email = document.myform.email.value;
+
+  if(username == null || username ==""){
+    alert("Please fill the username field"); 
+    return false;
+  }
+
+  if(username.length <= 2 || username.length > 20){
+    alert("Username length must be between 2 to 20");
+    return false;
+  }
+ 
+  if(!isNan(username)){
+    alert("Only characters are allowed")
+    return false;
+
+
+  
+  if(password == null || password ==""){
+    alert("Please fill the password field"); 
+    return false;
+  }
+
+  if(password.length <= 6 || password.length > 20){
+    alert("Password length must be between 5 to 20");
+    return false;
+  }
+
+ 
+  
+  if(password2 == null || password2 ==""){
+    alert("Please re-enter the password"); 
+    return false;
+  }
+
+  if(password!==password2){
+    alert("Passwords do not match");
+    return false;
+  }
+
+
+  if(phone == null || phone ==""){
+    alert("Please enter a phone number");
+    return false;
+  }
+
+  if(isNan(phone)){
+    alert("Only digits are allowed");
+    return false;
+  }
+
+  if(phone.length!=11){
+    alert("Phone number must be 11 digits only");
+    return false;
+  }
+
+
+  if(email == null || email =="")
+    alert("Please fill the email field");
+    return false;
+  }
+
+  if(email.indexOf('@') <= 0 ){
+    alert("@ Invalid Position");
+    return false;
+  }
+
+  if((email.charAt(email.length-4)!='.') && (email.charAt(email.length-3)!='.')){
+    alert(". Invalid Position");
+    return false;
+  }
+}
+
+      
+</script>  
+
+<form name="myform" action="/action_page.php" target="_blank" method="get" onsubmit="return validateForm();">
+  <fieldset>
+  <legend><h1>SIGN UP</h1></legend>
+    
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username"><br><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password"><br><br>
+
+    <label for="password2">Re-Enter Password:</label>
+    <input type="password" id="password2" name="password2"><br><br>
+
+    <label for="birthday">Enter your birthday</label>
+    <input type="date" id="birthday" name="birthday"><br><br>
+
+    <label for="phone">Enter your Phone number</label>
+    <input type="number" id="phone" name="phone"><br><br>
+ 
+    <label for="email">Enter your email:</label>
+    <input type="text" id="email" name="email" placeholder="abc@gmail.com"><br><br>
+    
+    <input type="submit" value="Register" id="register">
+
+  </fieldset>
+</form>
+</body>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<head>
+
+<title>My Form</title>
+
+<style>
+:root{
+    --success-color:#2ecc71;
+    --error-color: #e74c3c;
+}
+
+*{
+    box-sizing: border-box;
+}
+body{
+    background-color: #f9fafb;
+    font-family:'Open Sans',sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+}
+.container{
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0,0,0, 0.3);
+    width: 400px;
+
+}
+h1{
+    text-align: center;
+    margin: 0 0 20px;
+}
+.myform{
+
+    padding: 30px 40px;
+
+}
+.myform-control{
+
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+    position: relative;
+}
+.myform-control label{
+
+   color: #777;
+   display: block;
+   margin-bottom: 5px;
+}
+.myform-control input{
+    border: 2px solid  #f0f0f0;
+    border-radius: 4px;
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+
+}
+.myform-control input:focus{
+    outline: 0;
+    border-color: #777;
+}
+.myform-control.success input{
+
+    border-color:var(--success-color);
+
+}
+.myform-control.error input{
+    border-color:var(--error-color);
+}
+
+.myform-control small{
+    color: var(--error-color);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    visibility: visible;
+}
+
+.myform button{
+    cursor: pointer;
+    background-color: #3498db;
+    border: 2px sold #3498db;
+    border-radius: 4px;
+    color: #fff;
+    display: block;
+    font-size: 16px;
+    padding: 10px;
+    margin-top: 10px;
+    width: 100%;
+}
+</style>
+
+</head>
+
+<body>
+
+<script> 
+
+
+function validateForm(){
+  var username = document.myform.Username.value;
+  var password = document.myform.Password.value;
+  var password2 = document.myform.Password2.value;
+  var phone = document.myform.Phone.value;
+  var email = document.myform.Email.value;
+  var date = document.myform.date.value;
+
+  if(username ==""){
+    document.getElementById("1").innerHTML="Please fill the username field"; 
+    return false;
+  }
+  else{
+    document.getElementById("1").innerHTML="";
+  }
+
+  if(username.length <= 2 || username.length > 20){
+    document.getElementById("1").innerHTML="Username length must be between 2 to 20";
+    return false;
+  }
+  else{
+    document.getElementById("1").innerHTML="";
+  }
+
+var iChars = "!@#$%^&*()+=-[]\\\';,./{}|\":<>?";
+
+for (var i = 0; i < document.myform.Username.value.length; i++) {
+  if (iChars.indexOf(document.myform.Username.value.charAt(i)) != -1) {
+      document.getElementById("1").innerHTML="Your username has special characters. \nThese are not allowed.\n Please remove them and try again.";
+      return false;
+   }
+  else{
+    document.getElementById("1").innerHTML="";
+  }    
+}
+
+  
+  if(password ==""){
+    document.getElementById("2").innerHTML="Please fill the password field"; 
+    return false;
+  }
+  else{
+    document.getElementById("2").innerHTML="";
+  }
+
+  var passwordformat = /^(?=(.*[a-z]){3,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{6,}$/;
+  if(!(passwordformat.test(password))){
+    document.getElementById("2").innerHTML="Incorrect password format. \nPassword must contain 3 lowercase letters, 1 uppercase letter, 1 digit and 1 special case character.";
+    return false;
+  }
+  else{
+   document.getElementById("2").innerHTML="";
+  }
+
+ 
+  
+  if(password2 ==""){
+    document.getElementById("3").innerHTML="Please re-enter the password"; 
+    return false;
+  }
+  else{
+    document.getElementById("3").innerHTML="";
+  }
+
+  if(password!==password2){
+    document.getElementById("3").innerHTML="Passwords do not match";
+    return false;
+  }
+  else{
+    document.getElementById("3").innerHTML="";
+  }
+
+
+function ageValidation() {
+ 
+    var lre = /^\s*/;
+    var datemsg = "";
+    
+    var inputDate = document.myform.date.value;
+    inputDate = inputDate.replace(lre, "");
+    document.myform.date.value = inputDate;
+    datemsg = isValidDate(inputDate);
+        if (datemsg != "") {
+            alert(datemsg);
+            return;
+        }
+        else {
+            //Now find the Age based on the Birth Date
+            getAge(new Date(inputDate));
+        }
+ 
+}
+ 
+function getAge(birth) {
+ 
+    var today = new Date();
+    var nowyear = today.getFullYear();
+    var nowmonth = today.getMonth();
+    var nowday = today.getDate();
+ 
+    var birthyear = birth.getFullYear();
+    var birthmonth = birth.getMonth();
+    var birthday = birth.getDate();
+ 
+    var age = nowyear - birthyear;
+    var age_month = nowmonth - birthmonth;
+    var age_day = nowday - birthday;
+    
+    if(age_month < 0 || (age_month == 0 && age_day <0)) {
+            age = parseInt(age) -1;
+        }
+    alert(age);
+    
+    if ((age == 18 && age_month <= 0 && age_day <=0) || age < 18) {
+    }
+    else {
+        alert("You have crossed your 18th birthday !");
+    }
+ 
+}
+ 
+function isValidDate(dateStr) {
+ 
+    
+    var msg = "";
+    // Checks for the following valid date formats:
+    // MM/DD/YY   MM/DD/YYYY   MM-DD-YY   MM-DD-YYYY
+    // Also separates date into month, day, and year variables
+ 
+    // To require a 2 & 4 digit year entry, use this line instead:
+    //var datePat = /^(\d{1,2})(\/|-)(\d{1,2})\2(\d{2}|\d{4})$/;
+    // To require a 4 digit year entry, use this line instead:
+    var datePat = /^(\d{1,2})(\/|-)(\d{1,2})\2(\d{4})$/;
+ 
+    var matchArray = dateStr.match(datePat); // is the format ok?
+    if (matchArray == null) {
+        msg = "Date is not in a valid format.";
+        return msg;
+    }
+ 
+    month = matchArray[1]; // parse date into variables
+    day = matchArray[3];
+    year = matchArray[4];
+ 
+    
+    if (month < 1 || month > 12) { // check month range
+        msg = "Month must be between 1 and 12.";
+        return msg;
+    }
+ 
+    if (day < 1 || day > 31) {
+        msg = "Day must be between 1 and 31.";
+        return msg;
+    }
+ 
+    if ((month==4 || month==6 || month==9 || month==11) && day==31) {
+        msg = "Month "+month+" doesn't have 31 days!";
+        return msg;
+    }
+ 
+    if (month == 2) { // check for february 29th
+    var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
+    if (day>29 || (day==29 && !isleap)) {
+        msg = "February " + year + " doesn't have " + day + " days!";
+        return msg;
+    }
+    }
+ 
+    if (day.charAt(0) == '0') day= day.charAt(1);
+    
+    //Incase you need the value in CCYYMMDD format in your server program
+    //msg = (parseInt(year,10) * 10000) + (parseInt(month,10) * 100) + parseInt(day,10);
+    
+    return msg;  // date is valid
+}
+
+
+
+  
+  if(phone ==""){
+    document.getElementById("5").innerHTML="Please enter a phone number";
+    return false;
+  }
+  else{
+    document.getElementById("5").innerHTML="";
+  }
+
+  if(isNaN(phone)){
+    document.getElementById("5").innerHTML="Only digits are allowed";
+    return false;
+  }
+  else{
+    document.getElementById("5").innerHTML="";
+  }
+
+  var phoneformat = /^(?:(([+]|00)92)|0)((3[0-6][0-9]))(\d{7})$/;
+  if(!(phoneformat.test(phone))){
+    document.getElementById("5").innerHTML="Please enter valid phone format";
+    return false;
+  }
+  else{
+    document.getElementById("5").innerHTML="";
+  }
+
+
+  if(email ==""){
+    document.getElementById("6").innerHTML="Please fill the email field";
+    return false;
+  }
+  else{
+    document.getElementById("6").innerHTML="";
+  }
+	
+  var emailpattern=/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if(!(emailpattern.test(email))){
+    document.getElementById("6").innerHTML="Please enter a valid email";
+    return false;
+  }
+  else{
+   document.getElementById("6").innerHTML="";
+  }
+
+}
+
+</script>  
+
+
+<div class="container">
+  <form name="myform" id="myform" class="myform" action="/action_page.php" target="_blank" method="post" onsubmit="return validateForm();">
+  <h1>SIGN UP</h1>
+  
+  <div class="myform-control">  
+    <label for="Username">Username:</label>
+    <input type="text" id="Username" name="Username"><br><br>
+    <small id="1"></small>
+  </div><br><br>
+
+  <div class="myform-control">  
+    <label for="Password">Password:</label>
+    <input type="password" id="Password" name="Password"><br><br><br>
+    <small id="2"></small>
+  </div><br><br>
+
+  <div class="myform-control">  
+    <label for="Password2">Re-Enter Password:</label>
+    <input type="password" id="Password2" name="Password2">
+    <small id="3"></small>
+  </div><br><br>
+
+  <div class="myform-control"> 
+    <label for="Birthday">Enter your birthday</label>
+    <input type="text" id="date" name="Birthday" placeholder="mm/dd/yyyy" onchange="ageValidation()">
+    <small id="4"></small>
+  </div><br><br>
+
+  <div class="myform-control"> 
+    <label for="Phone">Enter your Phone number</label>
+    <input type="text" id="Phone" name="Phone">
+    <small id="5"></small>
+  </div><br><br>
+
+  <div class="myform-control"> 
+    <label for="Email">Enter your email:</label>
+    <input type="text" id="Email" name="Email" placeholder="abc@gmail.com"><br><br>
+    <small id="6"></small>
+  </div><br><br>
+
+    <input type="submit" value="Register" id="register">
+    <input type="reset" value="Reset" id="reset">
+
+  </form>
+</div>
+</body>
+</html>

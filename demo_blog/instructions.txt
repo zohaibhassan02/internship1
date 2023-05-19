@@ -1,0 +1,6 @@
+1. First of all open the folder "Database" and inside that the database "malala.sql" is.
+
+2. Go to localhost/phpmyadmin and create a new database with the name "malala" just after creating it, click the import option from the options and select the database file "malala.sql" which is inside "database" folder, just click save. So the database of this project will be imported to your own database. And this project will be working fine. 
+
+3. Your database name must be "malala" because if you give any other name then you'll make changes to connect.php page. 
+
